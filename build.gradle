@@ -30,8 +30,8 @@ dependencies {
 
 allure {
     adapter {
-        aspectjWeaver.set(true)
-        autoconfigure.set(true)
+        aspectjWeaver = true
+        autoconfigure = true
     }
     version = allureVersion
 
