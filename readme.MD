@@ -7,9 +7,10 @@
 6. тест на отправку видео из файловой системы
 
 
-
+## как запустить тесты
+* выполнить команду `./gradlew runTests`
 
 
 ## как сгенерировать отчет
-1. `gradle allureReport` - отчет будет в папке `build/reports/allure-report/index.html`
-2. или `gradle allureServe` - запустится сервер, и отчет откроется автоматически
+* `gradle allureReport` - отчет будет в папке `build/reports/allure-report/index.html`
+* или `gradle allureServe` - запустится сервер, и отчет откроется автоматически
