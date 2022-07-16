@@ -49,4 +49,13 @@ public class DataManager {
         }
         return properties.getProperty(prop);
     }
+
+    /**
+     * возвращает путь до файла, который используется в тестах
+     * @param fileName String имя файла
+     * @return String путь к файлу
+     */
+    public String getPathToTestFile(String fileName) {
+        return System.getProperty("user.dir") + "/src/test/resources/data/testFiles/" + fileName;
+    }
 }

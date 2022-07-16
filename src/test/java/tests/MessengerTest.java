@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 public class MessengerTest extends BaseTest {
     private String who = dataManager.getData("chat.who");
     private String message = dataManager.getData("chat.msg");
+    private String photoName = dataManager.getData("photo.name");
 
     @Owner("Чевычелов Сергей")
     @Test(description = "Тест на создание чата")
@@ -27,5 +28,39 @@ public class MessengerTest extends BaseTest {
         messengerSteps.checkIfChatHasCreated(who);
         Selenide.refresh();
         messengerSteps.checkIfChatHasCreated(who);
+    }
+
+    @Owner("Чевычелов Сергей")
+    @Test(description = "Тест на аттач существующего фото")
+    public void attachExistedPhotoTest() {
+        baseSteps.auth(user.getPhone(), user.getPass());
+        baseSteps.goToMessages();
+
+        messengerSteps.waitForChatListVisible();
+        messengerSteps.removeChatIfPresent(who);
+
+        messengerSteps.createChat(who);
+        messengerSteps.attachExistedPhoto();
+        messengerSteps.clickSend();
+
+        // проверим что фото отправилось
+        messengerSteps.photoMessageInChatShouldBeVisible();
+    }
+
+    @Owner("Чевычелов Сергей")
+    @Test(description = "Тест на аттач фото из проводника")
+    public void attachNewPhotoTest() {
+        baseSteps.auth(user.getPhone(), user.getPass());
+        baseSteps.goToMessages();
+
+        messengerSteps.waitForChatListVisible();
+        messengerSteps.removeChatIfPresent(who);
+
+        messengerSteps.createChat(who);
+        messengerSteps.attachFile(dataManager.getPathToTestFile(photoName));
+        messengerSteps.clickSend();
+
+        // проверим что фото отправилось
+        messengerSteps.photoMessageInChatShouldBeVisible();
     }
 }

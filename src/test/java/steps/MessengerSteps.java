@@ -56,4 +56,24 @@ public class MessengerSteps {
         assertTrue(names.contains(who), "Чат с " + who + " не создался");
         messengerPage.chatShouldBeVisibleInList(who);
     }
+
+    public void attachExistedPhoto() {
+        messengerPage.attachMedia("Фотография");
+        messengerPage.popUpShouldBeVisible();
+        messengerPage.selectLatestPhotoFromGallery();
+        messengerPage.popUpShouldBeHidden();
+    }
+
+    public void clickSend() {
+        messengerPage.clickSend();
+    }
+
+    public void photoMessageInChatShouldBeVisible() {
+        messengerPage.photoMessageInChatShouldBeVisible();
+    }
+
+    public void attachFile(String filePath) {
+        messengerPage.attachFileFromFileSystem(filePath);
+        messengerPage.removeAttachBtnShouldBeVisible();
+    }
 }
