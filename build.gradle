@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'io.qameta.allure' version '2.9.6'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+def allureVersion = "2.18.1"
+
+dependencies {
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
+    testImplementation 'com.codeborne:selenide:6.3.5'
+    testImplementation 'org.testng:testng:6.14.3'
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+    testImplementation 'io.rest-assured:rest-assured:5.0.1'
+
+    implementation "io.qameta.allure:allure-testng:${allureVersion}"
+    implementation "io.qameta.allure:allure-rest-assured:${allureVersion}"
+    testImplementation "io.qameta.allure:allure-commandline:${allureVersion}"
+    testImplementation "io.qameta.allure:allure-selenide:${allureVersion}"
+    testImplementation 'org.aspectj:aspectjweaver:1.9.5'
+}
+
+allure {
+    adapter {
+        aspectjWeaver.set(true)
+        autoconfigure.set(true)
+    }
+    version = allureVersion
+
+    useTestNG {
+        version = allureVersion
+    }
+}
+
+test {
+    ignoreFailures = true
+    useTestNG {
+
+    }
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+description = 'VKMessengerTest'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
