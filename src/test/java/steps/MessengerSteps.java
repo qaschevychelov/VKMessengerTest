@@ -2,6 +2,9 @@ package steps;
 
 import io.qameta.allure.Step;
 import pages.MessengerPage;
+import pages.MusicLibraryPage;
+import pages.PhotoGalleryPage;
+import pages.VideoSearchPage;
 
 import java.util.List;
 
@@ -10,6 +13,9 @@ import static org.testng.Assert.assertTrue;
 
 public class MessengerSteps {
     private MessengerPage messengerPage = new MessengerPage();
+    private PhotoGalleryPage photoGalleryPage = new PhotoGalleryPage();
+    private MusicLibraryPage musicLibraryPage = new MusicLibraryPage();
+    private VideoSearchPage videoSearchPage = new VideoSearchPage();
 
     @Step("Список чатов отображается")
     public void waitForChatListVisible() {
@@ -68,7 +74,7 @@ public class MessengerSteps {
     public void attachExistedPhoto() {
         messengerPage.attachMedia("Фотография");
         messengerPage.popUpShouldBeVisible();
-        messengerPage.selectLatestPhotoFromGallery();
+        photoGalleryPage.selectLatestPhotoFromGallery();
         messengerPage.popUpShouldBeHidden();
     }
 
@@ -86,5 +92,37 @@ public class MessengerSteps {
     public void attachFile(String filePath) {
         messengerPage.attachFileFromFileSystem(filePath);
         messengerPage.removeAttachBtnShouldBeVisible();
+    }
+
+    @Step("Прикрепим песню {songName}")
+    public void attachMusic(String songName) {
+        messengerPage.attachMedia("Аудиозапись");
+        messengerPage.popUpShouldBeVisible();
+        musicLibraryPage.setInput("Быстрый поиск", songName);
+        musicLibraryPage.waitUntilSearchIsDone();
+        musicLibraryPage.attachSong(songName);
+        messengerPage.popUpShouldBeHidden();
+        messengerPage.clickSend();
+    }
+
+    @Step("Песня {songName} в чате отображается")
+    public void songInChatShouldBeVisible(String songName) {
+        messengerPage.songInChatShouldBeVisible(songName);
+    }
+
+    @Step("Прикрепим видео из библиотеки {videoName}")
+    public void attachVideo(String videoName) {
+        messengerPage.attachMedia("Видеозапись");
+        messengerPage.popUpShouldBeVisible();
+        videoSearchPage.setInput("Поиск видео", videoName);
+        videoSearchPage.waitUntilSearchIsDone();
+        videoSearchPage.attachVideo(videoName);
+        messengerPage.popUpShouldBeHidden();
+        messengerPage.clickSend();
+    }
+
+    @Step("Видео {videoName} в чате отображается")
+    public void videoInChatShouldBeVisible(String videoName) {
+        messengerPage.videoInChatShouldBeVisible(videoName);
     }
 }

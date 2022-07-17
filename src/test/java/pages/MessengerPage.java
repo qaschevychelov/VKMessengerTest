@@ -34,10 +34,11 @@ public class MessengerPage extends BasePage {
     private final String XP_CHAT_SEND_BTN = "//div[contains(@class,'im-chat-input')]/button[@aria-label='Отправить']";
     private final String XP_CHAT_TXT_MSG = "//div[contains(@class,'im-mess-stack _im_mess_stack')]//li[.//div[text()='%s']][not(contains(@class,'im-mess_failed')) and not(contains(@class,'im-mess_sending'))]";
     private final String XP_CHAT_PHOTO_MSG = "//div[contains(@class,'im-mess-stack _im_mess_stack')]//li[.//a[@aria-label='фотография']][not(contains(@class,'im-mess_failed')) and not(contains(@class,'im-mess_sending'))]";
+    private final String XP_CHAT_SONG_MSG = "//div[contains(@class,'im-mess-stack _im_mess_stack')]//li[.//a[contains(@class,'audio_row__title_inner')][normalize-space(.)='%s']][not(contains(@class,'im-mess_failed')) and not(contains(@class,'im-mess_sending'))]";
+    private final String XP_CHAT_VIDEO_MSG = "//div[contains(@class,'im-mess-stack _im_mess_stack')]//li[.//a/div[contains(@class,'post_video_title')][normalize-space(.)='%s']][not(contains(@class,'im-mess_failed')) and not(contains(@class,'im-mess_sending'))]";
 
     // аттач файлов
     private final String XP_ATTACH_MENU_ITEM = "//div[contains(@class,'ms_items_more ')]//a[normalize-space(.)='%s']";
-    private final String XP_LAST_PHOTO = "//div[@id='photos_choose_rows']/a";
     private final String XP_ATTACH_FROM_FILE_SYSTEM = "//input[@id='im_full_upload']";
     private final String XP_ATTACH_REMOVE = "//div[@id='_im_media_preview']//div[@aria-label='Не прикреплять']";
 
@@ -114,10 +115,6 @@ public class MessengerPage extends BasePage {
         $x(String.format(XP_ATTACH_MENU_ITEM, type)).click();
     }
 
-    public void selectLatestPhotoFromGallery() {
-        $x(XP_LAST_PHOTO).click();
-    }
-
     public void clickSend() {
         $x(XP_CHAT_SEND_BTN).click();
     }
@@ -132,5 +129,13 @@ public class MessengerPage extends BasePage {
 
     public void removeAttachBtnShouldBeVisible() {
         $x(XP_ATTACH_REMOVE).shouldBe(Condition.visible);
+    }
+
+    public void songInChatShouldBeVisible(String songName) {
+        $x(String.format(XP_CHAT_SONG_MSG, songName)).shouldBe(Condition.visible);
+    }
+
+    public void videoInChatShouldBeVisible(String videoName) {
+        $x(String.format(XP_CHAT_VIDEO_MSG, videoName)).shouldBe(Condition.visible);
     }
 }

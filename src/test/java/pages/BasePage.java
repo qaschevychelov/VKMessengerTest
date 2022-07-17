@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class BasePage {
     private String XP_BTN = "//button[contains(@class,'FlatButton') or contains(@class,'vkc')][normalize-space(.)='%s']";
-    private String XP_INP = "//input[contains(@class,'TextField')][@placeholder='%s']";
+    private String XP_INP = "//input[contains(@class,'TextField') or contains(@class,'_field')][@placeholder='%s']";
     private String XP_LINK = "//a[normalize-space(.)='%s']";
     private String XP_POPUP = "//div[@id='box_layer']";
     private String XP_POPUP_CLOSE_BTN = XP_POPUP + "//div[contains(@class,'closeButton')]";

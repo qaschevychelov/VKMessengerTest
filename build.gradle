@@ -40,6 +40,10 @@ allure {
     }
 }
 
+test {
+    useTestNG()
+}
+
 task runTests(type: JavaExec, dependsOn: 'classes') {
     main = 'org.testng.TestNG'
     classpath = files("./src/test/resources",
