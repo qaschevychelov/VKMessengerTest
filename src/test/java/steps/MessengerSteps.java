@@ -1,10 +1,7 @@
 package steps;
 
 import io.qameta.allure.Step;
-import pages.MessengerPage;
-import pages.MusicLibraryPage;
-import pages.PhotoGalleryPage;
-import pages.VideoSearchPage;
+import pages.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ public class MessengerSteps {
     private PhotoGalleryPage photoGalleryPage = new PhotoGalleryPage();
     private MusicLibraryPage musicLibraryPage = new MusicLibraryPage();
     private VideoSearchPage videoSearchPage = new VideoSearchPage();
+    private FileSearchPage fileSearchPage = new FileSearchPage();
 
     @Step("Список чатов отображается")
     public void waitForChatListVisible() {
@@ -88,8 +86,8 @@ public class MessengerSteps {
         messengerPage.photoMessageInChatShouldBeVisible();
     }
 
-    @Step("Прикрепим файл из файловой системы")
-    public void attachFile(String filePath) {
+    @Step("Прикрепим медиа файл из файловой системы")
+    public void attachMediaFile(String filePath) {
         messengerPage.attachFileFromFileSystem(filePath);
         messengerPage.removeAttachBtnShouldBeVisible();
     }
@@ -102,6 +100,7 @@ public class MessengerSteps {
         musicLibraryPage.waitUntilSearchIsDone();
         musicLibraryPage.attachSong(songName);
         messengerPage.popUpShouldBeHidden();
+        messengerPage.removeAttachBtnShouldBeVisible();
         messengerPage.clickSend();
     }
 
@@ -118,11 +117,27 @@ public class MessengerSteps {
         videoSearchPage.waitUntilSearchIsDone();
         videoSearchPage.attachVideo(videoName);
         messengerPage.popUpShouldBeHidden();
+        messengerPage.removeAttachBtnShouldBeVisible();
+        messengerPage.clickSend();
+    }
+
+    @Step("Прикрепим файл из проводника")
+    public void attachFile(String fileName) {
+        messengerPage.attachMedia("Файл");
+        messengerPage.popUpShouldBeVisible();
+        fileSearchPage.uploadFileFromDisk(fileName);
+        messengerPage.popUpShouldBeHidden();
+        messengerPage.removeAttachBtnShouldBeVisible();
         messengerPage.clickSend();
     }
 
     @Step("Видео {videoName} в чате отображается")
     public void videoInChatShouldBeVisible(String videoName) {
         messengerPage.videoInChatShouldBeVisible(videoName);
+    }
+
+    @Step("Файл {fileName} в чате отображается")
+    public void fileInChatShouldBeVisible(String fileName) {
+        messengerPage.fileInChatShouldBeVisible(fileName);
     }
 }

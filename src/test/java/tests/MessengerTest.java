@@ -57,7 +57,7 @@ public class MessengerTest extends BaseTest {
         messengerSteps.removeChatIfPresent(who);
 
         messengerSteps.createChat(who);
-        messengerSteps.attachFile(dataManager.getPathToTestFile(photoName));
+        messengerSteps.attachMediaFile(dataManager.getPathToTestFile(photoName));
         messengerSteps.clickSend();
 
         // проверим, что фото отправилось
@@ -98,5 +98,42 @@ public class MessengerTest extends BaseTest {
 
         // проверим, что видео отправилось
         messengerSteps.videoInChatShouldBeVisible(videoName);
+    }
+
+    @Owner("Чевычелов Сергей")
+    @Test(description = "Тест на отправку видео из проводника")
+    public void attachNewVideoTest() {
+        String videoName = dataManager.getData("local.video.name");
+
+        baseSteps.auth(user.getPhone(), user.getPass());
+        baseSteps.goToMessages();
+
+        messengerSteps.waitForChatListVisible();
+        messengerSteps.removeChatIfPresent(who);
+
+        messengerSteps.createChat(who);
+        messengerSteps.attachMediaFile(dataManager.getPathToTestFile(videoName));
+        messengerSteps.clickSend();
+
+        // проверим, что видео отправилось
+        messengerSteps.videoInChatShouldBeVisible("Открыть видео");
+    }
+
+    @Owner("Чевычелов Сергей")
+    @Test(description = "Тест на отправку файла из проводника")
+    public void attachNewFileTest() {
+        String fileName = dataManager.getData("text.file.name");
+
+        baseSteps.auth(user.getPhone(), user.getPass());
+        baseSteps.goToMessages();
+
+        messengerSteps.waitForChatListVisible();
+        messengerSteps.removeChatIfPresent(who);
+
+        messengerSteps.createChat(who);
+        messengerSteps.attachFile(dataManager.getPathToTestFile(fileName));
+
+        // проверим, что файл отправился
+        messengerSteps.fileInChatShouldBeVisible(fileName);
     }
 }
